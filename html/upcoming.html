@@ -5,22 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/upcomingStyle.css">
-      <link rel="icon" type="image/x-icon" href="/images/ladder.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="../images/ladder.jpg">
     <script src="../js/main.js"></script>
     <title>Upcoming Events</title>
 </head>
-<body>
-    
-  <div id="nav-bar">
-    <a href ="../index.html" class="nav-option">Home</a></h3>
-    <a href ="./upcoming.html" class="nav-option">Upcoming Productions</a></h3>
-    <a href ="./pastProductions.html" class="nav-option">Past Productions</a></h3>
-    <a href ="./theProducers.html" class="nav-option">The Producers</a></h3>
-    <a href ="./Tickets.html" class="nav-option">Tickets</a></h3>
-    <a href ="./Support_Us.html" class="nav-option">Support Us</a></h3>
-</div>
+<body>  
+  <div id="navbar" class="topnav a">
+    <div class="topnav-right">
+    <a href="../index.html"><i class="fa fa-fw fa-home"></i> Home</a>
+      <div class="dropdown">
+        <button class="dropbtn" style="color:#721404;"><i class="fa fa-fw fa-calendar"></i> Schedule <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="./html/pastProductions.html">Past Productions</a>
+          <a href="./html/upcoming.html">Upcoming Events</a>
+          <a href="./html/Tickets.html">Tickets</a>
+        </div>
+      </div>
+    <a href="" style="padding-right:23px;"><i class="fa fa-fw fa-user"></i>Producers</a>
+    </div>
+        <div class="topnav-left">
+          <div id="mySidenav" class="sidenav">
+            <div class="logo-container2">
+              <img src="../images/ash drama copy.png" alt="Logo" width="110px" height="55px"></a>
+              </div>
+            <a href="index.html" style="margin-top: 25px;"><i class="fa fa-fw fa-home"></i> Home</a>
+            <a href="#">Upcoming Events</a>
+            <a href="#">Past Events</a>
+            <a href="../html/theProducers.html"><i class="fa fa-fw fa-user"></i> Producers</a>
+            <a href="#"><i class="fa fa-fw fa-money"></i> Tickets</a>
+            <a href="#"><i class="fa fa-fw fa-calendar"></i> Schedule </a>
+          </div>
+          <span id="menu" style="margin: 12px 12px; display: block; border: 1.5px solid;border-radius: 9px;padding: 4px 10px; color:#721404;font-size:15px;font-family: 'Roboto', sans-serif; font-weight: 100;cursor:pointer"><i class="fa fa-bars"></i></span>
+        </div>
+    <div class="logo-container" id="logo">
+    <a href="../index.html"><img src="../images/ash drama copy.png" alt="Logo" width="70px" height="37px"></a>
+    </div>
+  </div>
 
-  <div id="subheading-div">
+  <div class="section section1" id="upcoming-header">
+    <div class="p1">
+      <p>Upcoming Events</p>
+    </div>
+  </div>
+
+  <div class="shows">
+    <a href="./ourtown.html"><img src="../images/ourTownArrow.png" alt=""></a>
+    <img src="../images/footlooseArrow.png" alt="">
+  </div>
+
+  <div class="slideshow-container">
+    <div>
+      <a id="prev" onclick="plusSlides(-1)">&#10094;</a>
+    </div>
+    
+
+    <div class="slides fade" style="display: block;">
+      <a href ="https://meridianshenkman.evenue.net/cgi-bin/ncommerce3/SEGetEventList?groupCode=CS1128N&linkID=centrepointe&shopperContext=&caller=&appCode="><img src="../images/our town ticket.png" style="width:100%"></a>
+    </div>
+  
+    <div class="slides fade" style="display: none;">
+      <img src="../images/footloose_ticket.gif" style="width:100%">
+    </div>
+  
+    <div class="slides fade" style="display: none;">
+      <img src="../images/matilda ticket.gif" style="width:100%">
+    </div>
+  
+    <div>
+      <a id="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    
+  </div>
+
+</body>
+</html>
+
+
+<!--
+<div id="subheading-div">
     <p class="title-p" id="subheading">Upcoming Events</p>
   </div>
 
@@ -33,7 +97,6 @@
   <hr>
     <div class="slideshow-container">
 
-      <!-- Full-width images with number and caption text -->
       <div class="slides fade" style="display: block;">
         <a href ="https://meridianshenkman.evenue.net/cgi-bin/ncommerce3/SEGetEventList?groupCode=CS1128N&linkID=centrepointe&shopperContext=&caller=&appCode="><img src="../images/our town ticket.png" style="width:100%"></a>
       </div>
@@ -46,7 +109,6 @@
         <img src="../images/matilda ticket.gif" style="width:100%">
       </div>
     
-      <!-- Next and previous buttons -->
       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
       <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
@@ -72,6 +134,4 @@
       </div>
     </div>
 
-
-</body>
-</html>
+-->

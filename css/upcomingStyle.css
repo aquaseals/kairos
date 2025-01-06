@@ -37,3 +37,40 @@ padding: 3%;
 background-color: #343464;
 border-radius: 10%;
 }
+
+#upcoming-header {
+  text-align: center;
+  height: 10vh;
+  width: 100%;
+
+}
+
+#upcoming-header p {
+  text-align: center;
+  font-size: 80px;
+  padding: 0;
+}
+
+.shows {
+  display: flex;
+  justify-content: center;
+}
+
+.slideshow-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.slides {
+  width: 50%;
+}
+
+#prev {
+  display: flex;
+  justify-content: left;
+}
+
+#next {
+
+}
