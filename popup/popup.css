@@ -4,7 +4,7 @@ h1, h2, p, button {
 
 body {
     height: 40vh;
-    width: 20vw;
+    width: 100vw;
     border: 1px solid black;
 }
 
