@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./popup.css">
     <title>rabbithole</title>
 </head>
-<body>
-    <h1>rabbithole</h1>
+<body onload="entrance()">
+    <h1>rabbithole <img src="../rabbithole_icon.png" alt=""></h1>
     <script src="popup.js"></script>
 
     <div class="menu">
         <div>
-            <div class="tabs">
-                <p>tab 1</p>
-                <p>tab 2</p>
-            </div>
-            <input type="number" name="length" id="break-length">
+            <p>i want to avoid a rabbit hole in <span id="selected-tab">
+
+            <select name="all-tabs" id="tabs">
+                <option value="">tab 1</option>
+                <option value="">tab 2</option>
+            </select>
+
+            </span></p>
+            
+            <input type="number" placeholder="how long is your break? (mins)" name="length" id="break-length">
             <button>start break</button>
         </div>
 

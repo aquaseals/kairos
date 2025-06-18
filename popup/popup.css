@@ -1,0 +1,26 @@
+h1, h2, p, button {
+    font-family: Helvetica, sans-serif, monospace;
+}
+
+body {
+    height: 40vh;
+    width: 20vw;
+    border: 1px solid black;
+}
+
+h1 {
+    color: black;
+    text-shadow: 2px 2px 2px rgb(135, 129, 129) ;
+    height: 10%;
+    margin-inline: 5%;
+}
+
+h1 img {
+    height: 100%;
+    margin-bottom: -10px;
+}
+
+.menu {
+    margin-inline: 5%;
+}
+
