@@ -1,6 +1,8 @@
 console.log(`hello from background`)
 let seconds;
 let timeLeft;
+let timer;
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message == "startBreak"){
