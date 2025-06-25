@@ -11,7 +11,6 @@ chrome.runtime.onMessage.addListener(
 )
 
 function handleBreak(selectedTab, selectedTabId, duration) {
-    chrome.tabs.query({title: selectedTab}, (tab)=>{
-        console.log(`tab is active t/f -> ${tab.active}`)
-    })
+    let tab = chrome.tabs.query({title: selectedTab})
+    console.log(`tab is active t/f -> ${tab.active}`)
 }
