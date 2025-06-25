@@ -13,7 +13,6 @@ chrome.tabs.query({}, function(tabs) {
 chrome.tabs.onCreated.addListener((tab) => {
     currentTabs.push(tab.title)
     console.log(currentTabs)
-    updateTabList()
 })
 
 chrome.tabs.onRemoved.addListener((tab) => {
@@ -23,7 +22,6 @@ chrome.tabs.onRemoved.addListener((tab) => {
         }
     }
     console.log(currentTabs)
-    updateTabList()
 })
 
 chrome.tabs.onUpdated.addListener((tab) => {
@@ -33,11 +31,11 @@ chrome.tabs.onUpdated.addListener((tab) => {
         }
     }
     console.log(currentTabs)
-    updateTabList()
 })
 
 function updateTabList() {
     let tabDropdown = document.getElementById('tabs')
+    tabDropdown.innerHTML = ''
     for (let i=0; i<currentTabs.length; i++) {
         let tab = document.createElement("option")
         tab.innerHTML = currentTabs[i]
