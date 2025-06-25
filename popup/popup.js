@@ -1,11 +1,27 @@
 console.log(`this is a popup`)
+let tabDropdown;
+
+document.addEventListener("DOMContentLoaded", function(){
+    tabDropdown = document.getElementById('tabs')
+    chrome.tabs.query({}, function(tabs) {
+    for (let i=0; i<tabs.length; i++) {
+            currentTabs.push(tabs[i].title)
+            currentTabsIds.push(tabs[i].id)
+    }
+    console.log(currentTabs)
+    updateTabList()
+    })
+    document.getElementById('start').addEventListener('click', function(){
+        let selectedIndex = tabDropdown.selectedIndex
+        let duration = document.getElementById('length').value
+    chrome.runtime.sendMessage({action: "handleBreak", tabId: currentTabsIds[selectedIndex], duration: duration, tabTitle: currentTabs[selectedIndex]})
+    })
+})
 
 let currentTabs = []
 let currentTabsIds = []
-let tabDropdown;
 
 function updateTabList() {
-    tabDropdown = document.getElementById('tabs')
     while (tabDropdown.firstChild !== null) {
         tabDropdown.removeChild(tabDropdown.lastChild)
     }
@@ -16,48 +32,10 @@ function updateTabList() {
     }
 }
 
-chrome.tabs.query({}, function(tabs) {
-    for (let i=0; i<tabs.length; i++) {
-            currentTabs.push(tabs[i].title)
-            currentTabsIds.push(tabs[i].id)
+chrome.runtime.onMessage.addListener((message) => {
+    if (message.type == 'sendTabUpdate') {
+    currentTabs = message.tabs
+    currentTabsIds = message.tabIds
+    updateTabList()
     }
-    console.log(currentTabs)
-    updateTabList()
-    })
-
-chrome.tabs.onCreated.addListener((tab) => {
-    currentTabs.push(tab.title)
-    currentTabsIds.push(tab.id)
-    console.log(currentTabs)
-    updateTabList()
 })
-
-chrome.tabs.onRemoved.addListener(function(tabId) {
-    for (let i=0; i<currentTabs.length; i++) {
-        if(currentTabsId[i] == tabId) {
-            currentTabs.splice(i, 1)
-            currentTabsIds.splice(i, 1)
-        }
-    }
-    console.log(currentTabs)
-    updateTabList()
-})
-
-chrome.tabs.onUpdated.addListener((tab) => {
-    for (let i=0; i<currentTabs.length; i++) {
-        if(currentTabsIds[i] == tab.id) {
-            currentTabs[i] = tab.title
-        }
-    }
-    console.log(currentTabs)
-    updateTabList()
-})
-function handleBreak() {
-    let selectedTab = tabDropdown.value
-    console.log(`addevent listener for button wokring`)
-    alert(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
-}
-document.getElementById('start').addEventListener('click', handleBreak)
-
-
-
