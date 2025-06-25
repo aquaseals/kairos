@@ -12,22 +12,27 @@ chrome.runtime.onMessage.addListener(
     }
 )
 
-function timer(seconds) {
-    seconds++
+function timer(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
     chrome.tabs.onActivated.addListener(function(activeInfo){
         if(activeInfo.tabId == selectedTabId) {
             console.log(`timer starting`)
-            let breakTimer = setInterval(timer(duration*60))
-            if(seconds/60 == duration) {
+            for(let i; i<duration*60; i++) {
+                seconds++
+                timer(1000)
+            }
+            console.log(`break over back to work ho`)
+        }
+            /*if(seconds/60 == duration) {
                 clearInterval(breakTimer)
                 console.log(`break over back to work ho`)
             }
         } else {
             clearInterval(breakTimer)
             console.log(`switch to your break tab to continue break`)
-        }
+        }*/
     })
 }
