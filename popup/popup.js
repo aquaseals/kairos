@@ -54,9 +54,10 @@ chrome.tabs.onUpdated.addListener((tab) => {
 })
 function startBreak() {
     let selectedTab = tabDropdown.value
-    let selectedTabId = currentTabsIds[currentTabsIds.indexOf(selectedTab)]
+    let selectedTabId = currentTabsIds[currentTabs.indexOf(selectedTab)]
+    let breakLength = document.getElementById('length').value
     console.log(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
-    chrome.runtime.sendMessage({message: "startBreak", selectedTab: selectedTab, selectedTabId: selectedTabId})
+    chrome.runtime.sendMessage({message: "startBreak", selectedTab: selectedTab, selectedTabId: selectedTabId, duration: breakLength})
 }
 document.getElementById('start').addEventListener('click', startBreak)
 
