@@ -2,9 +2,10 @@ console.log(`this is a popup`)
 
 let currentTabs = []
 let currentTabsIds = []
+let tabDropdown;
 
 function updateTabList() {
-    let tabDropdown = document.getElementById('tabs')
+    tabDropdown = document.getElementById('tabs')
     while (tabDropdown.firstChild !== null) {
         tabDropdown.removeChild(tabDropdown.lastChild)
     }
@@ -51,6 +52,11 @@ chrome.tabs.onUpdated.addListener((tab) => {
     console.log(currentTabs)
     updateTabList()
 })
+function handleBreak() {
+    let selectedTab = tabDropdown.value
+    alert(`you want to start a break on ${selectedTab}`)
+}
+document.getElementById('start-break').addEventListener('click', handleBreak())
 
 
 
