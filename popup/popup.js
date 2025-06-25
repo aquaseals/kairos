@@ -23,5 +23,14 @@ chrome.tabs.onRemoved.addListener((tab) => {
     console.log(currentTabs)
 })
 
+chrome.tabs.onUpdated.addListener((tab) => {
+    for (let i=0; i<currentTabs.length; i++) {
+        if(currentTabs[i].id == tab.id) {
+            currentTabs[i] = tab.title
+        }
+    }
+    console.log(currentTabs)
+})
+
 chrome.tabs.on
 
