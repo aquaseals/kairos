@@ -17,7 +17,7 @@ function timer(seconds) {
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
-    chrome.tabs.onActivated.addListener(activeInfo, function(){
+    chrome.tabs.onActivated.addListener(function(activeInfo){
         if(activeInfo.tabId == selectedTabId) {
             console.log(`timer starting`)
             let breakTimer = setInterval(timer(duration*60))
