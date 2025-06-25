@@ -15,6 +15,12 @@ chrome.runtime.onMessage.addListener(
     }
 )
 
+function closeTab() {
+    chrome.window.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 500}, function(){
+        chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
+    })
+}
+
 function handleBreak(selectedTab, selectedTabId, duration) {
     timeLeft = duration*60 // convert mins to seconds
     chrome.tabs.onActivated.addListener(function(activeInfo){
@@ -32,10 +38,6 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             pauseTimer
         }
     })
-
-    if(timeLeft == 0) {
-        console.log(`break over get back to work ho`)
-    }
 }
 
 function startTimer() {
@@ -45,15 +47,18 @@ function startTimer() {
 
         if(timeLeft <= 0){
             clearInterval(timer)
+            closeTab()
         }
     }, 1000)
 
 }
 
 function pauseTimer() {
-    if (timer) {
+    try {
         clearInterval(timer)
         console.log(`timer paused`)
+    } catch (err) {
+        console.log(`no timer to pause`)
     }
 }
 
