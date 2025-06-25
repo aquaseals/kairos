@@ -54,8 +54,7 @@ chrome.tabs.onUpdated.addListener((tab) => {
 })
 function handleBreak() {
     let selectedTab = tabDropdown.value
-    console.log(`addevent listener for button wokring`)
-    alert(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
+    console.log(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
 }
 document.getElementById('start').addEventListener('click', handleBreak)
 
