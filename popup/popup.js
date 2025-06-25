@@ -7,6 +7,7 @@ chrome.tabs.query({}, function(tabs) {
             currentTabs.push(tabs[i].title)
     }
     console.log(currentTabs)
+    updateTabList()
     })
 
 chrome.tabs.onCreated.addListener((tab) => {
@@ -32,5 +33,12 @@ chrome.tabs.onUpdated.addListener((tab) => {
     console.log(currentTabs)
 })
 
-chrome.tabs.on
+function updateTabList() {
+    let tabDropdown = document.getElementById('tabs')
+    for (let i=0; i<currentTabs.length; i++) {
+        let tab = document.createElement("option")
+        tab.innerHTML = currentTabs[i]
+        tabDropdown.appendChild(tab)
+    }
+}
 
