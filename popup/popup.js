@@ -4,7 +4,9 @@ let currentTabs = []
 
 function updateTabList() {
     let tabDropdown = document.getElementById('tabs')
-    tabDropdown.innerHTML = ''
+    while (tabDropdown.firstChild) {
+        tabDropdown.removeChild(tabDropdown.lastChild)
+    }
     for (let i=0; i<currentTabs.length; i++) {
         let tab = document.createElement("option")
         tab.innerHTML = currentTabs[i]
