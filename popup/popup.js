@@ -44,7 +44,7 @@ chrome.tabs.onRemoved.addListener((tab) => {
 
 chrome.tabs.onUpdated.addListener((tab) => {
     for (let i=0; i<currentTabs.length; i++) {
-        if(currentTabIds[i] == tab.id) {
+        if(currentTabsIds[i] == tab.id) {
             currentTabs[i] = tab.title
         }
     }
