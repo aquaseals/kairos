@@ -1,12 +1,12 @@
 console.log(`this is a popup`)
 
-let currentTabs =
+let currentTabs = []
 
 chrome.tabs.query({}, function(tabs) {
     for (let i=0; i<tabs.length; i++) {
-            console.log(tabs[i].title)
             currentTabs.append(tabs[i].title)
     }
+    console.log(currentTabs)
     })
 
 chrome.tabs.onCreated.addListener((tab) => {
