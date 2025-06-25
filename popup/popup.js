@@ -4,13 +4,13 @@ let currentTabs = []
 
 chrome.tabs.query({}, function(tabs) {
     for (let i=0; i<tabs.length; i++) {
-            currentTabs.append(tabs[i].title)
+            currentTabs.push(tabs[i].title)
     }
     console.log(currentTabs)
     })
 
 chrome.tabs.onCreated.addListener((tab) => {
-    currentTabs.append(tab.title)
+    currentTabs.push(tab.title)
     console.log(currentTabs)
 })
 
