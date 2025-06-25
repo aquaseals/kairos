@@ -8,6 +8,7 @@
         "default_icon" : "rabbithole_icon.png"
     },
     "permissions" : [
-        "tabs"
+        "tabs", 
+        "activeTab"
     ]
 }

@@ -3,8 +3,8 @@ h1, h2, p, button {
 }
 
 body {
-    height: 40vh;
-    width: 100vw;
+    height: 80vh;
+    width: 50vw;
     border: 1px solid black;
 }
 

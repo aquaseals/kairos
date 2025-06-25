@@ -1,6 +1,8 @@
 console.log(`this is a popup`)
 
-let openTabs = chrome.tabs.query({}, function(tabs) {})
+chrome.tabs.query({}, function(tabs) {
+    console.log(tabs)
+})
 
 function entrance() {
     console.log(openTabs)
