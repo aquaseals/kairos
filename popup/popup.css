@@ -3,8 +3,8 @@ h1, h2, p, button {
 }
 
 body {
-    height: 100vh;
-    width: 70vw;
+    height: 100%;
+    width: 70%;
     border: 1px solid black;
 }
 
@@ -12,8 +12,6 @@ h1 {
     color: black;
     text-shadow: 2px 2px 2px rgb(135, 129, 129) ;
     height: 10%;
-
-    
     margin-inline: 5%;
 }
 

@@ -13,6 +13,7 @@ chrome.tabs.query({}, function(tabs) {
 chrome.tabs.onCreated.addListener((tab) => {
     currentTabs.push(tab.title)
     console.log(currentTabs)
+    updateTabList()
 })
 
 chrome.tabs.onRemoved.addListener((tab) => {
@@ -22,6 +23,7 @@ chrome.tabs.onRemoved.addListener((tab) => {
         }
     }
     console.log(currentTabs)
+    updateTabList()
 })
 
 chrome.tabs.onUpdated.addListener((tab) => {
@@ -31,6 +33,7 @@ chrome.tabs.onUpdated.addListener((tab) => {
         }
     }
     console.log(currentTabs)
+    updateTabList()
 })
 
 function updateTabList() {
