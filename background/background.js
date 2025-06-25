@@ -1,5 +1,6 @@
 console.log(`hello from background`)
 let seconds;
+let timeLeft;
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message == "startBreak"){
@@ -8,31 +9,49 @@ chrome.runtime.onMessage.addListener(
             let duration = request.duration
             seconds = 0
             handleBreak(selectedTab, selectedTabId, duration)
+            console.log(`going to handle break`)
         }
     }
 )
 
-function timer(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 function handleBreak(selectedTab, selectedTabId, duration) {
+    timeLeft = duration*60 // convert mins to seconds
     chrome.tabs.onActivated.addListener(function(activeInfo){
         if(activeInfo.tabId == selectedTabId) {
-            console.log(`timer starting`)
-            for(let i; i<duration*60; i++) {
-                seconds++
-                timer(1000)
-            }
-            console.log(`break over back to work ho`)
-        }
-            /*if(seconds/60 == duration) {
-                clearInterval(breakTimer)
-                console.log(`break over back to work ho`)
-            }
+            startTimer()
+            console.log(`starting timer`)
         } else {
-            clearInterval(breakTimer)
-            console.log(`switch to your break tab to continue break`)
-        }*/
+            pauseTimer()
+        }
+    })
+    chrome.tabs.onUpdated.addListener((tabId) => {
+        if(tabId = selectedTabId) {
+            startTimer()
+        } else {
+            pauseTimer
+        }
     })
 }
+
+function startTimer() {
+    if (!timer) {
+        timer = setInterval(() => {
+            timeLeft--
+            console.log(timeLeft)
+
+            if(timeLeft <= 0){
+                clearInterval(timer)
+            }
+        }, 1000)
+    }
+}
+
+function pauseTimer() {
+    if (timer) {
+        clearInterval(timer)
+        console.log(`timer paused`)
+    }
+}
+
+
+
