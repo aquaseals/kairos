@@ -2,6 +2,8 @@ console.log(`hello from background`)
 let seconds;
 let timeLeft;
 let deleteTabId;
+let currentTabsId;
+let currentTabs;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -9,6 +11,8 @@ chrome.runtime.onMessage.addListener(
             let selectedTab = request.selectedTab
             let selectedTabId = request.selectedTabId
             let duration = request.duration
+            currentTabs = request.currentTabs
+            currentTabsIds = request.currentTabsIds
             seconds = 0
             handleBreak(selectedTab, selectedTabId, duration)
             console.log(`going to handle break`)
@@ -23,14 +27,14 @@ function closeTab(deleteTabId) {
         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
     })
     chrome.tabs.remove(deleteTabId)
-    //chrome.runtime.sendMessage()
+    chrome.runtime.sendMessage({message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds})
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
     timeLeft = duration*60 // convert mins to seconds
     deleteTabId = selectedTabId
-    chrome.tabs.query({active: true}, function(tab){
-        if(tab.id == selectedTabId && timeLeft > 0) {
+    chrome.tabs.query({active: true}, function(tab){ // not working -> should start timer if on the correct tab
+        if(tab[0].id == selectedTabId && timeLeft > 0) {
             startTimer()
             console.log(`starting timer`)
         } else {
