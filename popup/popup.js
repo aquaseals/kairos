@@ -1,6 +1,7 @@
 console.log(`this is a popup`)
 
 let currentTabs = []
+let currentTabIds = []
 
 function updateTabList() {
     let tabDropdown = document.getElementById('tabs')
@@ -17,6 +18,7 @@ function updateTabList() {
 chrome.tabs.query({}, function(tabs) {
     for (let i=0; i<tabs.length; i++) {
             currentTabs.push(tabs[i].title)
+            currentTabsIds.push(tabs[i].id)
     }
     console.log(currentTabs)
     updateTabList()
@@ -24,6 +26,7 @@ chrome.tabs.query({}, function(tabs) {
 
 chrome.tabs.onCreated.addListener((tab) => {
     currentTabs.push(tab.title)
+    currentTabsIds.push(tab.id)
     console.log(currentTabs)
     updateTabList()
 })
@@ -32,6 +35,7 @@ chrome.tabs.onRemoved.addListener((tab) => {
     for (let i=0; i<currentTabs.length; i++) {
         if(currentTabs[i] == tab.title) {
             currentTabs.splice(i, 1)
+            currentTabsIds.splice(i, 1)
         }
     }
     console.log(currentTabs)
@@ -40,7 +44,7 @@ chrome.tabs.onRemoved.addListener((tab) => {
 
 chrome.tabs.onUpdated.addListener((tab) => {
     for (let i=0; i<currentTabs.length; i++) {
-        if(currentTabs[i].id == tab.id) {
+        if(currentTabIds[i] == tab.id) {
             currentTabs[i] = tab.title
         }
     }
