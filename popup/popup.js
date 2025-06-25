@@ -32,9 +32,9 @@ chrome.tabs.onCreated.addListener((tab) => {
     updateTabList()
 })
 
-chrome.tabs.onRemoved.addListener((tab) => {
+chrome.tabs.onRemoved.addListener(function(tabId) {
     for (let i=0; i<currentTabs.length; i++) {
-        if(currentTabs[i] == tab.title) {
+        if(currentTabsId[i] == tabId) {
             currentTabs.splice(i, 1)
             currentTabsIds.splice(i, 1)
         }
@@ -54,9 +54,9 @@ chrome.tabs.onUpdated.addListener((tab) => {
 })
 function handleBreak() {
     let selectedTab = tabDropdown.value
-    alert(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML}`)
+    alert(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
 }
-document.getElementById('start').addEventListener('click', handleBreak())
+document.getElementById('start').addEventListener('click', handleBreak)
 
 
 
