@@ -4,7 +4,7 @@ let currentTabs = []
 
 function updateTabList() {
     let tabDropdown = document.getElementById('tabs')
-    while (tabDropdown.firstChild) {
+    while (tabDropdown.firstChild !== null) {
         tabDropdown.removeChild(tabDropdown.lastChild)
     }
     for (let i=0; i<currentTabs.length; i++) {
