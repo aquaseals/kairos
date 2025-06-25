@@ -1,9 +1,6 @@
 console.log(`this is a popup`)
 
-chrome.tabs.query({}, function(tabs) {
-    console.log(tabs.title)
-})
-
-
-
-entrance()
+let [allTabs] = await chrome.tabs.query()
+for(let i; i < allTabs.length; i++) {
+    console.log(allTabs[i])
+}
