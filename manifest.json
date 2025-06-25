@@ -7,9 +7,6 @@
         "default_popup" : "./popup/popup.html",
         "default_icon" : "rabbithole_icon.png"
     },
-    "background" : {
-        "service_worker" : "./background/background.js"
-    },
     "permissions" : [
         "tabs", 
         "activeTab"
