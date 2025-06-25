@@ -1,7 +1,7 @@
 console.log(`this is a popup`)
 
 let currentTabs = []
-let currentTabIds = []
+let currentTabsIds = []
 
 function updateTabList() {
     let tabDropdown = document.getElementById('tabs')
