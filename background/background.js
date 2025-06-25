@@ -1,7 +1,6 @@
 console.log(`hello from background`)
 let seconds;
 let timeLeft;
-let timer;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -33,19 +32,22 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             pauseTimer
         }
     })
+
+    if(timeLeft == 0) {
+        console.log(`break over get back to work ho`)
+    }
 }
 
 function startTimer() {
-    if (!timer) {
-        timer = setInterval(() => {
-            timeLeft--
-            console.log(timeLeft)
+    timer = setInterval(() => {
+        timeLeft--
+        console.log(timeLeft)
 
-            if(timeLeft <= 0){
-                clearInterval(timer)
-            }
-        }, 1000)
-    }
+        if(timeLeft <= 0){
+            clearInterval(timer)
+        }
+    }, 1000)
+
 }
 
 function pauseTimer() {
