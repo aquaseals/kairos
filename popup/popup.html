@@ -7,22 +7,24 @@
     <title>rabbithole</title>
 </head>
 <body>
-    <h1>rabbithole <img src="../rabbithole_icon.png" alt=""></h1>
+    <div id="head-container">
+         <h1>rabbithole</h1>
+         <img src="../rabbithole_icon.png" alt="">
+    </div>
+   
 
     <div class="menu">
         <div>
-            <p>i want to avoid a rabbit hole in <span id="selected-tab">
+            <p>Jumping into a <span id="selected-tab">
 
             <select name="all-tabs" id="tabs">
             </select>
 
-            </span></p>
+            </span> rabbithole</p>
             
-            <input type="number" placeholder="break length (mins)" name="length" id="length">
+            <input type="number" placeholder="how long are you in the rabbithole? (mins)" name="length" id="length" required>
             <button id="start">start break</button>
         </div>
-
-        <p>end break</p>
         
         <div>
             <!--auto breaks on specific sites toggle-->

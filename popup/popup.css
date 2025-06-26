@@ -3,9 +3,14 @@ h1, h2, p, button {
 }
 
 body {
-    height: 100rem;
-    width: 70rem;
-    border: 1px solid black;
+    max-height: 100vh;
+    max-width: 30vw;
+}
+
+#head-container {
+    display:flex;
+    flex-direction: row;
+    max-height: 20%;
 }
 
 h1 {
