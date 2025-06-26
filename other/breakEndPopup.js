@@ -36,8 +36,8 @@ chrome.runtime.onMessage.addListener(
                 let focusTabIndex = currentTabs.indexOf(focusTab)
                 let focusTabId = currentTabsIds[focusTabIndex]
                 console.log(focusTab, windowInfo.id, focusTabId, focusTabIndex)
+                chrome.windows.remove(windowInfo.id)
                 chrome.tabs.update(focusTabId, {active: true})
-                chrome.window.remove(windowInfo.id)
             })
 
             /*chrome.tabs.onRemoved.addListener(function(tabId){
