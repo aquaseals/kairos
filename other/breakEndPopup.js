@@ -3,6 +3,7 @@ let currentTabs;
 let focusPopup;
 let windowInfo
 let focusTab;
+let focusTabId;
 let buttonState = false;
 let tabDropdown;
 
