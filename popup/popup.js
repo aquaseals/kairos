@@ -58,7 +58,9 @@ function startBreak() {
     let breakLength = document.getElementById('length').value
     console.log(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
     chrome.runtime.sendMessage({message: "startBreak", selectedTab: selectedTab, selectedTabId: selectedTabId, duration: breakLength, currentTabs: currentTabs, currentTabsIds: currentTabsIds})
-    window.close()
+    chrome.tabs.query({active: true}, function(tab){
+        chrome.tabs.remove(tab[0].id)
+    })
 }
 document.getElementById('start').addEventListener('click', startBreak)
 
