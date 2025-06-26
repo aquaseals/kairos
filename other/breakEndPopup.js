@@ -1,12 +1,14 @@
 let currentTabsId;
 let currentTabs;
 let focusPopup;
+let windowInfo
 
 chrome.runtime.onMessage.addListener(
     async function(request, sender, sendResponse) {
         if(request.message == "goFocus"){
             currentTabs = request.currentTabs
             currentTabsIds = request.currentTabsIds
+            windowInfo = request.window
             let focuPopupTab = await new Promise((resolve) => {
                 chrome.tabs.query({active: true, title: "Focus time!"}, function(tab){
                 resolve(tab[0])
@@ -24,9 +26,12 @@ chrome.runtime.onMessage.addListener(
             tabDropdown.appendChild(tab)
              }
 
-            /*document.getElementById("focus").addEventListener('click', function())
+            document.getElementById("focus").addEventListener('click', function(){
+                let focusTab = tabDropdown.value
+                console.log(focusTab, windowInfo.id)
+            })
 
-            chrome.tabs.onRemoved.addListener(function(tabId){
+            /*chrome.tabs.onRemoved.addListener(function(tabId){
                 if(tabId == focusPopup) {
                     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
                         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
