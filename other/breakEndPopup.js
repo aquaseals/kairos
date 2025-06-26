@@ -7,11 +7,16 @@ chrome.runtime.onMessage.addListener(
         if(request.message == "goFocus"){
             currentTabs = request.currentTabs
             currentTabsIds = request.currentTabsIds
-            await chrome.tabs.query({active: true, title: "Focus time!"}, function(tab){
-                focusPopup = tab[0].id
+            let focuPopupTab = await new Promise((resolve) => {
+                chrome.tabs.query({active: true, title: "Focus time!"}, function(tab){
+                resolve(tab[0])
             })
+            })
+            focusPopup = focuPopupTab?.id
             console.log(focusPopup)
             console.log(currentTabs, currentTabsIds)
+
+            // updating dropdown w latest tabs
             let tabDropdown = document.getElementById('tabs')
             for (let i=0; i<currentTabs.length; i++) {
             let tab = document.createElement("option")
