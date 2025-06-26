@@ -1,6 +1,7 @@
 console.log(`hello from background`)
 let seconds;
 let timeLeft;
+let time;
 let deleteTabId;
 let currentTabsIds;
 let currentTabs;
@@ -8,6 +9,7 @@ let popupWindowId;
 let buttonState = false
 let focusTabId;
 let idOfFocusPopupTab;
+let numOfTimers = 0
 
 chrome.tabs.onRemoved.addListener(function(tabId){
     chrome.tabs.onActivated.removeListener(arguments.callee)
@@ -92,9 +94,22 @@ function closeTab(deleteTabId) {
 function handleBreak(selectedTab, selectedTabId, duration) {
     timeLeft = duration*60 // convert mins to seconds
     deleteTabId = selectedTabId
-    chrome.tabs.query({active: true}, function(tab){ // not working -> should start timer if on the correct tab
+
+    if(numOfTimers == 1) {
+        let userChoice = prompt(`you have a break happening on a tab, do you want to start a new break on ${selectedTab}?`)
+        if (userChoice) {
+            numOfTimers = 0
+            endTimer()
+            handleBreak(selectedTab, selectedTabId, duration)
+            console.log(`ending old timer, starting new break`)
+        } else {
+            console.log(`continuing old timer`)
+        }
+    } else {
+        chrome.tabs.query({active: true}, function(tab){ 
         if(tab[0].id == selectedTabId && timeLeft > 0) {
             startTimer()
+            numOfTimers = 1
             console.log(`starting timer`)
         } else {
             pauseTimer()
@@ -103,6 +118,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
     chrome.tabs.onActivated.addListener(function(activeInfo){
         if(activeInfo.tabId == selectedTabId && timeLeft > 0) {
             startTimer()
+            numOfTimers = 1
             console.log(`starting timer`)
         } else {
             pauseTimer()
@@ -111,10 +127,13 @@ function handleBreak(selectedTab, selectedTabId, duration) {
     chrome.tabs.onUpdated.addListener((tabId) => {
         if(tabId == selectedTabId && timeLeft > 0) {
             startTimer()
+            numOfTimers = 1
+            console.log(`starting timer`)
         } else {
-            pauseTimer
+            pauseTimer()
         }
     })
+    }
 }
 
 function startTimer() {
@@ -124,6 +143,7 @@ function startTimer() {
 
         if(timeLeft <= 0){
             clearInterval(timer)
+            numOfTimers = 0
             closeTab(deleteTabId)
         }
     }, 1000)
@@ -137,6 +157,10 @@ function pauseTimer() {
     } catch (err) {
         console.log(`no timer to pause`)
     }
+}
+
+function endTimer() {
+    clearInterval(timer)
 }
 
 
