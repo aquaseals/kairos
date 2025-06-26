@@ -4,6 +4,7 @@ let focusPopup;
 let windowInfo
 let focusTab;
 let buttonState = false;
+let tabDropdown;
 
 chrome.runtime.onMessage.addListener(
     async function(request, sender, sendResponse) {
@@ -21,7 +22,7 @@ chrome.runtime.onMessage.addListener(
             console.log(currentTabs, currentTabsIds)
 
             // updating dropdown w latest tabs
-            let tabDropdown = document.getElementById('tabs')
+            tabDropdown = document.getElementById('tabs')
             for (let i=0; i<currentTabs.length; i++) {
             let tab = document.createElement("option")
             tab.innerHTML = currentTabs[i]
