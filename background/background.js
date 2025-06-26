@@ -32,7 +32,17 @@ function closeTab(deleteTabId) {
                     currentTabs.splice(i, 1)
                     currentTabsIds.splice(i, 1)
                     console.log(currentTabs)
-                    chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
+                    chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}, function(response){
+                    let buttonState = response.buttonState
+                    let focusPopup = response.focusPopupId
+                    chrome.tabs.onRemoved.addListener(function(tabId){
+                    if(buttonState == false && tabId == focusPopup) {
+                    chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
+                        chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
+                    })
+                }
+            })
+                    }) //send msg to 2nd popup
                 }
             })
         })
