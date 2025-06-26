@@ -26,26 +26,28 @@ chrome.runtime.onMessage.addListener(
             for (let i=0; i<currentTabs.length; i++) {
             let tab = document.createElement("option")
             tab.innerHTML = currentTabs[i]
+            tab.value = currentTabs[i]
             tabDropdown.appendChild(tab)
              }
 
             document.getElementById("focus").addEventListener('click', function(){
                 buttonState = true
                 let focusTab = tabDropdown.value
-                let focusTabId = currentTabsIds[currentTabs.indexOf(focusTab)]
-                console.log(focusTab, windowInfo.id, focusTabId)
-                chrome.window.remove(windowInfo.id)
+                let focusTabIndex = currentTabs.indexOf(focusTab)
+                let focusTabId = currentTabsIds[focusTabIndex]
+                console.log(focusTab, windowInfo.id, focusTabId, focusTabIndex)
                 chrome.tabs.update(focusTabId, {active: true})
+                chrome.window.remove(windowInfo.id)
             })
 
-            chrome.tabs.onRemoved.addListener(function(tabId){
+            /*chrome.tabs.onRemoved.addListener(function(tabId){
                 console.log(tabId, focusPopup, buttonState)
                 if(buttonState == false) {
                     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
                         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
                     })
                 }
-            })
+            })*/
         }
     }
 )
