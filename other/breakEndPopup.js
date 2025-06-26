@@ -2,6 +2,8 @@ let currentTabsId;
 let currentTabs;
 let focusPopup;
 let windowInfo
+let focusTab;
+let buttonState = false;
 
 chrome.runtime.onMessage.addListener(
     async function(request, sender, sendResponse) {
@@ -27,17 +29,18 @@ chrome.runtime.onMessage.addListener(
              }
 
             document.getElementById("focus").addEventListener('click', function(){
+                buttonState = true
                 let focusTab = tabDropdown.value
                 console.log(focusTab, windowInfo.id)
             })
 
-            /*chrome.tabs.onRemoved.addListener(function(tabId){
-                if(tabId == focusPopup) {
+            chrome.tabs.onRemoved.addListener(function(tabId){
+                if(tabId == focusPopup && buttonState == false) {
                     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
                         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
                     })
                 }
-            })*/
+            })
         }
     }
 )
