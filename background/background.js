@@ -28,12 +28,9 @@ function closeTab(deleteTabId) {
             chrome.tabs.onUpdated.addListener(function listener(tabId, inof){ // make sure popup window loaded
                 if(tabId === tab.id && inof.status == "complete") {
                     chrome.tabs.onUpdated.removeListener(listener)
-                    for (let i=0; i<currentTabs.length; i++) {
-                    if(currentTabsId[i] == deleteTabId) {
-                        currentTabs.splice(i, 1)
-                        currentTabsIds.splice(i, 1)
-                    }
-                    }
+                    let i = currentTabsIds.indexOf(deleteTabId)
+                    currentTabs.splice(i, 1)
+                    currentTabsIds.splice(i, 1)
                     console.log(currentTabs)
                     chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
                 }
