@@ -18,7 +18,12 @@ chrome.tabs.onRemoved.addListener(function(tabId){
         popupWindowId = window.id
         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){
         idOfFocusPopupTab = tab.id
-        chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
+        chrome.tabs.onUpdated.addListener(function listener(tabId, info){ // make sure popup window loaded
+                if(tabId === tab.id && info.status == "complete") {
+                    chrome.tabs.onUpdated.removeListener(listener)
+                    chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
+                }
+            })
 
         })
     })
