@@ -8,10 +8,7 @@ chrome.runtime.onMessage.addListener(
             currentTabs = request.currentTabs
             currentTabsIds = request.currentTabsIds
             await chrome.tabs.query({active: true, title: "Focus time!"}, function(tab){
-                for (let i=0; i<tab.length; i++) {
-                    console.log(tab[i].id, i)
-                    focusPopup = tab[i].id
-                }
+                focusPopup = tab[0].id
             })
             console.log(focusPopup)
             console.log(currentTabs, currentTabsIds)
