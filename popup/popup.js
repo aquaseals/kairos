@@ -34,7 +34,7 @@ chrome.tabs.onCreated.addListener((tab) => {
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
     for (let i=0; i<currentTabs.length; i++) {
-        if(currentTabsId[i] == tabId) {
+        if(currentTabsIds[i] == tabId) {
             currentTabs.splice(i, 1)
             currentTabsIds.splice(i, 1)
         }
