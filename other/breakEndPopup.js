@@ -1,4 +1,4 @@
-let currentTabsId;
+let currentTabsIds;
 let currentTabs;
 let focusPopup;
 let windowInfo
@@ -36,13 +36,15 @@ chrome.runtime.onMessage.addListener(
                 let focusTabIndex = currentTabs.indexOf(focusTab)
                 let focusTabId = currentTabsIds[focusTabIndex]
                 console.log(focusTab, windowInfo.id, focusTabId, focusTabIndex)
-                chrome.windows.remove(windowInfo.id)
                 chrome.tabs.update(focusTabId, {active: true})
+                chrome.runtime.sendMessage({message: "buttonPressed"})
+                chrome.windows.remove(windowInfo.id)
             })
 
-            sendResponse({focusPopupId: focusPopup, buttonState: buttonState})
-            return true
+            chrome.runtime.sendMessage({message: "popupOpened", windowId: windowInfo.id, focusTabId: focusTabId})
+
         }
+        return true
     }
 )
 
