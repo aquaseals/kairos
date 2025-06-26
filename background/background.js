@@ -59,6 +59,8 @@ chrome.runtime.onMessage.addListener(
 )
 
 function closeTab(deleteTabId) {
+    numOfTimers = 0
+    endTimer()
     chrome.tabs.onActivated.removeListener(arguments.callee)
     chrome.tabs.onUpdated.removeListener(arguments.callee)
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
@@ -96,15 +98,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
     deleteTabId = selectedTabId
 
     if(numOfTimers == 1) {
-        let userChoice = prompt(`you have a break happening on a tab, do you want to start a new break on ${selectedTab}?`)
-        if (userChoice) {
-            numOfTimers = 0
-            endTimer()
-            handleBreak(selectedTab, selectedTabId, duration)
-            console.log(`ending old timer, starting new break`)
-        } else {
-            console.log(`continuing old timer`)
-        }
+        console.log(`continuing old timer`)
     } else {
         chrome.tabs.query({active: true}, function(tab){ 
         if(tab[0].id == selectedTabId && timeLeft > 0) {
