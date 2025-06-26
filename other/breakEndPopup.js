@@ -41,7 +41,7 @@ chrome.runtime.onMessage.addListener(
             })
 
             chrome.tabs.onRemoved.addListener(function(tabId){
-                console.log(tabId, focusPopup, buttonState)
+                alert(tabId, focusPopup, buttonState)
                 if(buttonState == false && tabId == focusPopup) {
                     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
                         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
