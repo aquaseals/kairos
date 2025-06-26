@@ -43,7 +43,6 @@ chrome.runtime.onMessage.addListener(
             })
 
             chrome.runtime.sendMessage({message: "popupOpened", windowId: windowInfo.id, focusTabId: focusTabId})
-
         }
         return true
     }

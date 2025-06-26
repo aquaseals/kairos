@@ -9,6 +9,7 @@ let buttonState = false
 let focusTabId;
 
 chrome.tabs.onRemoved.addListener(function(tabId){
+    console.log(`tab was closed\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}\n id of closed tab -> ${tabId}`)
     if(buttonState == false && tabId == focusTabId) {
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
@@ -31,10 +32,14 @@ chrome.runtime.onMessage.addListener(
         if(request.message == "buttonPressed") {
             buttonState = true
             focusTabId = request.focusTabId
+            popupWindowId = request.windowId
+            console.log(`focus button pressed\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
+
         } else if (request.message == "popupOpened") {
             popupWindowId = request.windowId
             buttonState = false
             focusTabId = request.focusTabId
+            console.log(`focus popup opened\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
         }
     }
 )
