@@ -2,6 +2,11 @@ h1, h2, p, button {
     font-family: Helvetica, sans-serif, monospace;
 }
 
+p {
+    font-size: 20px;
+    margin: 0;
+}
+
 body {
     height: 700px;
     width: 350px;
@@ -21,7 +26,7 @@ h1 {
     font-size: 40px;
 }
 
-h1 img {
+#icon {
     height: 10%;
     width: 20%;
     margin-left: -5px;
@@ -29,6 +34,16 @@ h1 img {
 
 .menu {
     margin-inline: 5%;
+}
+
+.tab-selection {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-selection div {
+    display: flex;
+    flex-direction: row;
 }
 
 select {
