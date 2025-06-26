@@ -1,15 +1,16 @@
 let currentTabsId;
 let currentTabs;
+let focusPopup;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message == "goFocus"){
             currentTabs = request.currentTabs
             currentTabsIds = request.currentTabsIds
-            let focusPopup = chrome.tabs.query({active: true, title: "Focus time!"})
+            focusPopup = chrome.tabs.query({active: true, title: "Focus time!"})
             console.log(focusPopup)
             console.log(currentTabs, currentTabsIds)
-
+            let tabDropdown = document.getElementById('tabs')
             for (let i=0; i<currentTabs.length; i++) {
             let tab = document.createElement("option")
             tab.innerHTML = currentTabs[i]
