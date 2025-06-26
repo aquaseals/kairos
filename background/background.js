@@ -7,12 +7,13 @@ let currentTabs;
 let popupWindowId;
 let buttonState = false
 let focusTabId;
+let idOfFocusPopupTab;
 
 chrome.tabs.onRemoved.addListener(function(tabId){
     chrome.tabs.onActivated.removeListener(arguments.callee)
     chrome.tabs.onUpdated.removeListener(arguments.callee)
-    console.log(`tab was closed\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}\n id of closed tab -> ${tabId}`)
-    if(buttonState == false && tabId == popupWindowId) {
+    console.log(`tab was closed\n has button been pressed? -> ${buttonState}\n focus popup window id -> ${popupWindowId}\n focus popup tab id -> ${idOfFocusPopupTab}\n going to go to this tab -> ${focusTabId}\n id of closed tab -> ${tabId}`)
+    if(buttonState == false && tabId == idOfFocusPopupTab) {
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')})
     })
@@ -51,12 +52,13 @@ function closeTab(deleteTabId) {
     chrome.tabs.onUpdated.removeListener(arguments.callee)
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){ // create 2nd popup window
         chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){ // load popup html in new tab
-            chrome.tabs.onUpdated.addListener(function listener(tabId, inof){ // make sure popup window loaded
-                if(tabId === tab.id && inof.status == "complete") {
+            chrome.tabs.onUpdated.addListener(function listener(tabId, info){ // make sure popup window loaded
+                if(tabId === tab.id && info.status == "complete") {
                     chrome.tabs.onUpdated.removeListener(listener)
                     let i = currentTabsIds.indexOf(deleteTabId)
                     currentTabs.splice(i, 1)
                     currentTabsIds.splice(i, 1)
+                    idOfFocusPopupTab = tab.id
                     console.log(currentTabs)
                     chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
                 }
