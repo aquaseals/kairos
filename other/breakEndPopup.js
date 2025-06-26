@@ -4,7 +4,6 @@ let focusPopup;
 let windowInfo
 let focusTab;
 let focusTabId;
-let buttonState = false;
 let tabDropdown;
 
 chrome.runtime.onMessage.addListener(
@@ -32,13 +31,12 @@ chrome.runtime.onMessage.addListener(
              }
 
             document.getElementById("focus").addEventListener('click', function(){
-                buttonState = true
+                chrome.runtime.sendMessage({message: "buttonPressed"})
                 let focusTab = tabDropdown.value
                 let focusTabIndex = currentTabs.indexOf(focusTab)
                 let focusTabId = currentTabsIds[focusTabIndex]
                 console.log(focusTab, windowInfo.id, focusTabId, focusTabIndex)
                 chrome.tabs.update(focusTabId, {active: true})
-                chrome.runtime.sendMessage({message: "buttonPressed"})
                 chrome.windows.remove(windowInfo.id)
             })
 

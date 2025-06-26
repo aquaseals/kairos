@@ -24,7 +24,6 @@ chrome.tabs.onRemoved.addListener(function(tabId){
                     chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
                 }
             })
-
         })
     })
 }
