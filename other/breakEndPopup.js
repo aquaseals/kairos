@@ -31,8 +31,10 @@ chrome.runtime.onMessage.addListener(
             document.getElementById("focus").addEventListener('click', function(){
                 buttonState = true
                 let focusTab = tabDropdown.value
-                console.log(focusTab, windowInfo.id, focusTabId)
                 let focusTabId = currentTabsId[currentTabs.indexOf(focusTab)]
+                console.log(focusTab, windowInfo.id, focusTabId)
+                chrome.window.remove(windowInfo.id)
+                chrome.tabs.update(focusTabId, {active: true})
             })
 
             chrome.tabs.onRemoved.addListener(function(tabId){
