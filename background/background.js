@@ -23,10 +23,15 @@ chrome.runtime.onMessage.addListener(
 function closeTab(deleteTabId) {
     chrome.tabs.onActivated.removeListener(arguments.callee)
     chrome.tabs.onUpdated.removeListener(arguments.callee)
-    chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){
-        chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){
-    chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds})
+    chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(){ // create 2nd popup window
+        chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){ // load popup html in new tab
+            chrome.tabs.onUpdated(function listener(tabId, inof){ // make sure popup window loaded
+                if(tabId === tab.id && inof.status == "complete") {
+                    chrome.tabs.onUpdated.removeListener(listener)
+                    chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds}) //send msg to 2nd popup
 
+                }
+            })
         })
     })
     chrome.tabs.remove(deleteTabId)}
