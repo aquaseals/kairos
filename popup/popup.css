@@ -4,12 +4,12 @@ h1, h2, p, button {
 
 p {
     font-size: 20px;
-    margin: 0;
+    margin: 5px;
 }
 
 body {
     height: 700px;
-    width: 350px;
+    width: 400px;
 }
 
 #head-container {
@@ -22,7 +22,7 @@ h1 {
     color: black;
     text-shadow: 2px 2px 2px rgb(135, 129, 129) ;
     margin-inline: 5%;
-    margin-top: 5px;
+    margin-top: 7px;
     font-size: 40px;
 }
 
@@ -39,6 +39,7 @@ h1 {
 .tab-selection {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .tab-selection div {
@@ -50,3 +51,24 @@ select {
     width: 250px;
 }
 
+.duration {
+    display: flex;
+    flex-direction: column;
+}
+
+.duration input {
+    height: 25px;
+    width: 265px;
+}
+
+#start {
+    padding: 3px;
+    border-radius: 5px;
+    width: 100px;
+    margin-top: 10px;
+    height: 30px;
+    border: 0;
+    background-color: black;
+    color: white;
+    font-size: 15px;
+}
