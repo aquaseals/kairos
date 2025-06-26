@@ -22,7 +22,8 @@ chrome.runtime.onMessage.addListener(
             console.log(focusPopup)
             console.log(currentTabs, currentTabsIds)
 
-            // updating dropdown w latest tabs
+            document.addEventListener("DOMContentLoaded", function(){
+                // updating dropdown w latest tabs
             tabDropdown = document.getElementById('tabs')
             for (let i=0; i<currentTabs.length; i++) {
             let tab = document.createElement("option")
@@ -30,6 +31,7 @@ chrome.runtime.onMessage.addListener(
             tab.value = currentTabs[i]
             tabDropdown.appendChild(tab)
              }
+            })
 
             document.getElementById("focus").addEventListener('click', function(){
                 buttonState = true
