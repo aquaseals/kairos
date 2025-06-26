@@ -12,6 +12,7 @@ function updateTabList() {
     for (let i=0; i<currentTabs.length; i++) {
         let tab = document.createElement("option")
         tab.innerHTML = currentTabs[i]
+        tab.value = currentTabs[i]
         tabDropdown.appendChild(tab)
     }
 }
@@ -56,7 +57,6 @@ function startBreak() {
     let selectedTab = tabDropdown.value
     let selectedTabId = currentTabsIds[currentTabs.indexOf(selectedTab)]
     let breakLength = document.getElementById('length').value
-    console.log(`you want to start a break on ${selectedTab} or ${document.getElementById('selected-tab').innerHTML} for ${document.getElementById('length').innerHTML}`)
     chrome.runtime.sendMessage({message: "startBreak", selectedTab: selectedTab, selectedTabId: selectedTabId, duration: breakLength, currentTabs: currentTabs, currentTabsIds: currentTabsIds})
     chrome.tabs.query({title: "rabbithole"}, function(tab){
         try {chrome.tabs.remove(tab[0].id)}
