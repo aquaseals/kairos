@@ -3,29 +3,35 @@ h1, h2, p, button {
 }
 
 body {
-    max-height: 100vh;
-    max-width: 30vw;
+    height: 700px;
+    width: 350px;
 }
 
 #head-container {
     display:flex;
     flex-direction: row;
-    max-height: 20%;
+    max-height: 10%;
 }
 
 h1 {
     color: black;
     text-shadow: 2px 2px 2px rgb(135, 129, 129) ;
-    height: 10%;
     margin-inline: 5%;
+    margin-top: 5px;
+    font-size: 40px;
 }
 
 h1 img {
-    height: 100%;
-    margin-bottom: -10px;
+    height: 10%;
+    width: 20%;
+    margin-left: -5px;
 }
 
 .menu {
     margin-inline: 5%;
+}
+
+select {
+    width: 250px;
 }
 
