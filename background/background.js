@@ -106,8 +106,10 @@ function closeTab(deleteTabId) {
 
 
 function handleBreak(selectedTab, selectedTabId, duration) {
-    chrome.tabs.onActivated.removeListener(onActivatedFunc)
-    chrome.tabs.onUpdated.removeListener(onUpdatedFunc)
+    try {
+        chrome.tabs.onActivated.removeListener(onActivatedFunc)
+        chrome.tabs.onUpdated.removeListener(onUpdatedFunc)
+    } catch (err) {}
     timeLeft = duration*60 // convert mins to seconds
     deleteTabId = selectedTabId
 
@@ -176,8 +178,10 @@ function pauseTimer() {
 
 function endTimer() {
     clearInterval(timer)
-    chrome.tabs.onActivated.removeListener(onActivatedFunc);
-    chrome.tabs.onUpdated.removeListener(onUpdatedFunc);
+    try {
+        chrome.tabs.onActivated.removeListener(onActivatedFunc)
+        chrome.tabs.onUpdated.removeListener(onUpdatedFunc)
+    } catch (err) {}
 }
 
 
