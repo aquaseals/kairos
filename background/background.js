@@ -62,31 +62,17 @@ function onRemoveFunc(tabId){
             })
         } else {
             // focus button was pressed, do not recreate popup
+            chrome.tabs.onRemoved.removeListener(onRemoveFunc)
             popupAlreadyOpen = false
             idOfFocusPopupTab = undefined
             popupWindowId = undefined
             buttonState = false // reset for next break
-            chrome.tabs.onRemoved.removeListener(onRemoveFunc)
         }
-    } else if (popupAlreadyOpen === true && tabId !== idOfFocusPopupTab) {
+        return;
+    } else if (popupAlreadyOpen === true && tabId !== idOfFocusPopupTab) { //prevents multiple focus popups
         return
     }
     console.log(`tab was closed\n has button been pressed? -> ${buttonState}\n focus popup window id -> ${popupWindowId}\n focus popup tab id -> ${idOfFocusPopupTab}\n going to go to this tab -> ${focusTabId}\n id of closed tab -> ${tabId}`)
-    if (buttonState === false && tabId === idOfFocusPopupTab && popupAlreadyOpen === false) {
-        chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
-            popupWindowId = window.id
-            popupAlreadyOpen = true
-            chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){
-                idOfFocusPopupTab = tab.id
-                chrome.tabs.onUpdated.addListener(function listener(tabId, info){ // make sure popup window loaded
-                    if(tabId === tab.id && info.status === "complete") {
-                        chrome.tabs.onUpdated.removeListener(listener)
-                        chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
-                    }
-                })
-            })
-        })
-    }
 }
 
 chrome.runtime.onMessage.addListener(
@@ -131,7 +117,6 @@ function closeTab(deleteTabId) {
     console.log(`in close tab func, is popup tab already open? -> ${popupAlreadyOpen}`)
     if (popupAlreadyOpen) return
     endTimer()
-
     removeListeners()
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
         popupWindowId = window.id // create 2nd popup window
