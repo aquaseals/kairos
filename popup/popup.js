@@ -64,6 +64,7 @@ function startBreak() {
             console.log(`rabbithole is already closed`, err)
         }
     })
+    window.close()
 }
 
 document.getElementById('start').addEventListener('click', function() {

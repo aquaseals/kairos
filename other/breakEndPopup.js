@@ -39,6 +39,7 @@ chrome.runtime.onMessage.addListener(
                 console.log(focusTab, windowInfo.id, focusTabId, focusTabIndex)
                 chrome.tabs.update(focusTabId, {active: true})
                 chrome.windows.remove(windowInfo.id)
+                window.close()
             })
 
             chrome.runtime.sendMessage({message: "popupOpened", windowId: windowInfo.id, focusTabId: focusTabId})

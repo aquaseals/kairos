@@ -91,11 +91,12 @@ chrome.runtime.onMessage.addListener(
             focusTabId = request.focusTabId
             console.log(`focus popup opened\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
         }
+        return true
     }
 )
 
 function closeTab(deleteTabId) {
-    buttonState = true
+    //buttonState = true
     console.log(`in close tab func, is popup tab already open? -> ${popupAlreadyOpen}`)
     if (popupAlreadyOpen) return
     endTimer()
@@ -122,9 +123,7 @@ function closeTab(deleteTabId) {
             })
         })
     })
-    chrome.tabs.remove(deleteTabId, () => {
-    popupAlreadyOpen = false
-    })
+    chrome.tabs.remove(deleteTabId)
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
