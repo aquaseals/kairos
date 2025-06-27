@@ -67,9 +67,13 @@ function startBreak() {
             currentTabs: currentTabs,
             currentTabsIds: currentTabsIds
         },
-        function() {
-            rabbitholeStatus.innerText = "In a rabbithole"
-            setTimeout(() => { window.close(); }, 500);
+        function(response) {
+            if (response && response.status === "error") {
+                rabbitholeStatus.innerText = response.message
+            } else {
+                rabbitholeStatus.innerText = "In a rabbithole"
+                setTimeout(() => { window.close(); }, 500);
+            }
         }
     )
 }

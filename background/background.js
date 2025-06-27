@@ -78,6 +78,11 @@ function onRemoveFunc(tabId){
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message === "startBreak"){
+            // Prevent starting a new break if one is already ongoing
+            if (timer && timer !== 0) {
+                sendResponse({status: "error", message: "Error, cannot be in more than 1 rabbithole at once"});
+                return;
+            }
             popupAlreadyOpen = false
             buttonState = false
             idOfFocusPopupTab = undefined
