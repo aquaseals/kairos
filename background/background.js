@@ -41,7 +41,6 @@ chrome.runtime.onMessage.addListener(
             let duration = request.duration
             currentTabs = request.currentTabs
             currentTabsIds = request.currentTabsIds
-            timeLeft = 0
             handleBreak(selectedTab, selectedTabId, duration)
             console.log(`going to handle break`)
         }
