@@ -1,7 +1,7 @@
 let currentTabsIds;
 let currentTabs;
 let focusPopup;
-let windowInfo
+let windowId
 let focusTab;
 let focusTabId;
 let tabDropdown;
@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(
         if(request.message == "goFocus"){
             currentTabs = request.currentTabs
             currentTabsIds = request.currentTabsIds
-            windowInfo = request.window
+            windowId = request.window.id
             let focuPopupTab = await new Promise((resolve) => {
                 chrome.tabs.query({active: true, title: "Focus time!"}, function(tab){
                 resolve(tab[0])
@@ -35,16 +35,15 @@ chrome.runtime.onMessage.addListener(
                 focusTab = tabDropdown.value
                 let focusTabIndex = currentTabs.indexOf(focusTab)
                 focusTabId = currentTabsIds[focusTabIndex]
-                chrome.runtime.sendMessage({message: "buttonPressed", windowId: windowInfo.id, focusTabId: focusTabId})
-                console.log(focusTab, windowInfo.id, focusTabId, focusTabIndex)
+                chrome.runtime.sendMessage({message: "buttonPressed", windowId: windowId, focusTabId: focusTabId})
+                console.log(focusTab, windowId, focusTabId, focusTabIndex)
                 chrome.tabs.update(focusTabId, {active: true})
-                chrome.windows.remove(windowInfo.id)
+                chrome.windows.remove(windowId)
                 window.close()
             })
 
-            chrome.runtime.sendMessage({message: "popupOpened", windowId: windowInfo.id, focusTabId: focusTabId})
+            chrome.runtime.sendMessage({message: "popupOpened", windowId: windowId, focusTabId: focusTabId})
         }
-        return true
     }
 )
 

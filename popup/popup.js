@@ -67,7 +67,7 @@ function startBreak() {
             currentTabsIds: currentTabsIds
         },
         function() {
-            window.close() // close the popup after sending the message
+            setTimeout(() => { window.close(); }, 500);
         }
     )
 }
