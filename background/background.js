@@ -88,8 +88,6 @@ function onRemoveFunc(tabId){
     }
 }
 
-chrome.tabs.onRemoved.addListener(onRemoveFunc)
-
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message === "startBreak"){
@@ -105,6 +103,7 @@ chrome.runtime.onMessage.addListener(
             handleBreak(selectedTab, selectedTabId, duration)
             console.log(`going to handle break`)
             sendResponse({status: "ok", message: "Break started"});
+            chrome.tabs.onRemoved.addListener(onRemoveFunc)
         }
         if(request.message === "buttonPressed") {
             buttonState = true
@@ -112,6 +111,7 @@ chrome.runtime.onMessage.addListener(
             popupWindowId = request.windowId
             popupAlreadyOpen = false 
             idOfFocusPopupTab = undefined
+            chrome.tabs.onRemoved.removeListener(onRemoveFunc)
             console.log(`focus button pressed\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
         } else if (request.message === "popupOpened") {
             popupWindowId = request.windowId
