@@ -76,3 +76,7 @@ select {
 #status {
     font-size: 20px;
 }
+
+#warning {
+    opacity: 0;
+}
