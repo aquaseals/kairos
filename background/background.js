@@ -20,7 +20,7 @@ function onActivatedFunc(activeInfo){
         }
 }
 
-function onRemovedFunc(tabId) {
+function onUpdatedFunc(tabId) {
         if(tabId === selectedTabId && timeLeft > 0 && tabId !== deleteTabId) {
             startTimer()
             console.log(`starting timer in updated`)
@@ -34,7 +34,7 @@ function onRemovedFunc(tabId) {
 function removeListeners() {
     try{
     chrome.tabs.onActivated.removeListener(onActivatedFunc)
-    chrome.tabs.onUpdated.removeListener(onRemovedFunc)
+    chrome.tabs.onUpdated.removeListener(onUpdatedFunc)
     }
     catch (err) {
 
@@ -142,7 +142,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
         }
     })
     chrome.tabs.onActivated.addListener(onActivatedFunc)
-    chrome.tabs.onUpdated.addListener(onRemoveFunc)
+    chrome.tabs.onUpdated.addListener(onUpdatedFunc)
     }
 }
 
