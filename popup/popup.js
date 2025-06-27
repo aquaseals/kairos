@@ -58,10 +58,10 @@ function startBreak() {
     let selectedTabId = currentTabsIds[currentTabs.indexOf(selectedTab)]
     let breakLength = document.getElementById('length').value
     chrome.runtime.sendMessage({message: "startBreak", selectedTab: selectedTab, selectedTabId: selectedTabId, duration: breakLength, currentTabs: currentTabs, currentTabsIds: currentTabsIds})
-    chrome.windows.getCurrent(function(window){
-        chrome.windows.remove(window.id)
-    })
-    //window.close()
+    // chrome.windows.getCurrent(function(window){
+    //     chrome.windows.remove(window.id)
+    // })
+    // window.close()
 }
 
 document.getElementById('start').addEventListener('click', function() {
