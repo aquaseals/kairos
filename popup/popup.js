@@ -92,6 +92,7 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message === "popupOpened") {
             rabbitholeStatus.innerText = "In a rabbithole"
+            warning.opacity = 0
         }
         if(request.message === "buttonPressed") {
             rabbitholeStatus.innerText = "Not in a rabbithole"
@@ -103,6 +104,7 @@ chrome.runtime.onMessage.addListener(
 chrome.runtime.sendMessage({message: "getBreakStatus"}, function(response) {
     if (response && response.inRabbithole) {
         rabbitholeStatus.innerText = "In a rabbithole"
+        warning.opacity = 0
     } else {
         rabbitholeStatus.innerText = "Not in a rabbithole"
         warning.opacity = 0

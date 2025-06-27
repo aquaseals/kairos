@@ -35,11 +35,13 @@ chrome.runtime.onMessage.addListener(
                 focusTab = tabDropdown.value
                 let focusTabIndex = currentTabs.indexOf(focusTab)
                 focusTabId = currentTabsIds[focusTabIndex]
-                chrome.runtime.sendMessage({message: "buttonPressed", windowId: windowId, focusTabId: focusTabId})
+                chrome.runtime.sendMessage({message: "buttonPressed", windowId: windowId, focusTabId: focusTabId}, function() {
+                    chrome.windows.remove(windowId)
+                })
                 console.log(focusTab, windowId, focusTabId, focusTabIndex)
                 chrome.tabs.update(focusTabId, {active: true})
-                chrome.windows.remove(windowId)
-                window.close()
+                // chrome.windows.remove(windowId) // moved to callback above
+                // window.close() // not needed, chrome.windows.remove will close the popup
             })
 
             chrome.runtime.sendMessage({message: "popupOpened", windowId: windowId, focusTabId: focusTabId})
