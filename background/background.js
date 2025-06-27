@@ -64,6 +64,7 @@ chrome.runtime.onMessage.addListener(
 )
 
 function closeTab(deleteTabId) {
+    console.log(`in close tab func, is popup tab already open? -> ${popupAlreadyOpen}`)
     if (popupAlreadyOpen) return
 
     popupAlreadyOpen = true
@@ -121,27 +122,31 @@ function handleBreak(selectedTab, selectedTabId, duration) {
         if(tab[0].id == selectedTabId && timeLeft > 0) {
             startTimer()
             numOfTimers = 1
-            console.log(`starting timer`)
+            console.log(`starting timer in query`)
         } else {
             pauseTimer()
+            console.log(`pausing timer in query`)
         }
     })
     chrome.tabs.onActivated.addListener(function (activeInfo){
         if(activeInfo.tabId == selectedTabId && timeLeft > 0) {
             startTimer()
             numOfTimers = 1
-            console.log(`starting timer`)
+            console.log(`starting timer in activated`)
         } else {
             pauseTimer()
+            console.log(`pausing timer in activated`)
         }
     })
     chrome.tabs.onUpdated.addListener(function (tabId) {
-        if(tabId == selectedTabId && timeLeft > 0) {
+        if(tabId == selectedTabId && timeLeft > 0 && tabId != deleteTabId) {
             startTimer()
             numOfTimers = 1
-            console.log(`starting timer`)
+            console.log(`starting timer in updated`)
         } else {
             pauseTimer()
+            console.log(`pausing timer in updated`)
+
         }
     })
     }
