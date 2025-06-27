@@ -78,6 +78,7 @@ chrome.runtime.onMessage.addListener(
             currentTabsIds = request.currentTabsIds
             handleBreak(selectedTab, selectedTabId, duration)
             console.log(`going to handle break`)
+            sendResponse({status: "ok", message: "Break started"});
         }
         if(request.message === "buttonPressed") {
             buttonState = true
