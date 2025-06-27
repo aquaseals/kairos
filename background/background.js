@@ -135,11 +135,11 @@ function handleBreak(selectedTab, selectedTabId, duration) {
         if(tabId == selectedTabId && timeLeft > 0 && tabId != deleteTabId) {
             startTimer()
             console.log(`starting timer in updated`)
-        } else {
+        } /*else {
             pauseTimer()
             console.log(`pausing timer in updated`)
 
-        }
+        }*/
     })
     }
 }
