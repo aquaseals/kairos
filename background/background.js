@@ -126,7 +126,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             pauseTimer()
         }
     })
-    chrome.tabs.onActivated.addListener(function arguments.callee(activeInfo){
+    chrome.tabs.onActivated.addListener(function (activeInfo){
         if(activeInfo.tabId == selectedTabId && timeLeft > 0) {
             startTimer()
             numOfTimers = 1
@@ -135,7 +135,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             pauseTimer()
         }
     })
-    chrome.tabs.onUpdated.addListener(function arguments.callee(tabId) {
+    chrome.tabs.onUpdated.addListener(function (tabId) {
         if(tabId == selectedTabId && timeLeft > 0) {
             startTimer()
             numOfTimers = 1
