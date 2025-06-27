@@ -67,7 +67,12 @@ function startBreak() {
             currentTabsIds: currentTabsIds
         },
         function() {
-            window.close()
+            chrome.tabs.query({active: true, title: "rabbithole"}, function(tab){
+            try {chrome.tabs.remove(tab[0].id)}
+            catch (err) {
+                console.log(`rabbithole is already closed`, err)
+            }
+        })
         }
     )
 }
