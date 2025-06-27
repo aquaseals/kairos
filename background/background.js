@@ -45,11 +45,10 @@ function removeListeners() {
 
 chrome.tabs.onRemoved.addListener(function onRemoveFunc(tabId){
     removeListeners()
-    if (tabId === idOfFocusPopupTab && buttonState === false) {
-        popupAlreadyOpen = false
-    }
     if(popupAlreadyOpen === true) {
         return
+    } else if (tabId === idOfFocusPopupTab && buttonState === false) {
+        popupAlreadyOpen = false
     }
     console.log(`tab was closed\n has button been pressed? -> ${buttonState}\n focus popup window id -> ${popupWindowId}\n focus popup tab id -> ${idOfFocusPopupTab}\n going to go to this tab -> ${focusTabId}\n id of closed tab -> ${tabId}`)
     if(buttonState === false && tabId === idOfFocusPopupTab && popupAlreadyOpen === false) {
