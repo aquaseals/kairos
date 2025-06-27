@@ -69,7 +69,7 @@ function startBreak() {
         },
         function(response) {
             if (response && response.status === "error") {
-                rabbitholeStatus.innerText = response.message
+                rabbitholeStatus.innerText = response.message // not working, just displays "in a rabbithole"
             } else {
                 rabbitholeStatus.innerText = "In a rabbithole"
                 setTimeout(() => { window.close(); }, 500);

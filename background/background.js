@@ -42,6 +42,35 @@ function removeListeners() {
 
 function onRemoveFunc(tabId){
     removeListeners()
+    // if the user closes the break tab (the one being timed), treat as timer end
+    if (tabId === deleteTabId && timer && timer !== 0) {
+        // end timer and cleanup, but do NOT delete any tabs (user already did)
+        endTimer()
+        removeListeners()
+        // optionally, you may want to show the focus popup as you do in closeTab:
+        chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
+            popupWindowId = window.id
+            popupAlreadyOpen = true
+            chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){
+                idOfFocusPopupTab = tab.id
+                chrome.tabs.onUpdated.addListener(function listener(tabId2, info){
+                    if(tabId2 === tab.id && info.status === "complete") {
+                        chrome.tabs.onUpdated.removeListener(listener)
+                        chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window})
+                    }
+                })
+            })
+        })
+        // clean up break state
+        popupAlreadyOpen = true
+        idOfFocusPopupTab = undefined
+        popupWindowId = undefined
+        buttonState = false
+        deleteTabId = undefined
+        timer = 0
+        return;
+    }
+
     // only handle if the closed tab is the focus popup tab
     if (tabId === idOfFocusPopupTab) {
         if (!buttonState && popupAlreadyOpen) {
