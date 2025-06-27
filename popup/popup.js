@@ -67,7 +67,7 @@ function startBreak() {
 }
 
 document.getElementById('start').addEventListener('click', function() {
-    if(document.getElementById('length').value >= 0) {
+    if(document.getElementById('length').value > 0) {
         startBreak()
     } else {
         console.log(`type in a duration`)
