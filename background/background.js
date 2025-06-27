@@ -9,9 +9,10 @@ let buttonState = false
 let focusTabId;
 let idOfFocusPopupTab;
 let popupAlreadyOpen = false
+let selectedTabIdGlobal;
 
 function onActivatedFunc(activeInfo){
-        if(activeInfo.tabId === selectedTabId && timeLeft > 0) {
+        if(activeInfo.tabId === selectedTabIdGlobal && timeLeft > 0) {
             startTimer()
             console.log(`starting timer in activated`)
         } else {
@@ -21,7 +22,7 @@ function onActivatedFunc(activeInfo){
 }
 
 function onUpdatedFunc(tabId) {
-        if(tabId === selectedTabId && timeLeft > 0 && tabId !== deleteTabId) {
+        if(tabId === selectedTabIdGlobal && timeLeft > 0 && tabId !== deleteTabId) {
             startTimer()
             console.log(`starting timer in updated`)
         } /*else {
@@ -141,6 +142,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             console.log(`pausing timer in query`)
         }
     })
+    selectedTabIdGlobal = selectedTabId
     chrome.tabs.onActivated.addListener(onActivatedFunc)
     chrome.tabs.onUpdated.addListener(onUpdatedFunc)
     }
@@ -174,6 +176,3 @@ function pauseTimer() {
 function endTimer() {
     clearInterval(timer)
 }
-
-
-
