@@ -3,6 +3,7 @@ console.log(`this is a popup`)
 let currentTabs = []
 let currentTabsIds = []
 let tabDropdown;
+let rabbitholeStatus = document.getElementById('status')
 
 function updateTabList() {
     tabDropdown = document.getElementById('tabs')
@@ -67,7 +68,7 @@ function startBreak() {
             currentTabsIds: currentTabsIds
         },
         function() {
-            document.body.innerHTML = "<div style='text-align:center;margin-top:30px;'>Break started!</div>";
+            rabbitholeStatus.innerHTML = "In a rabbithole"
             setTimeout(() => { window.close(); }, 500);
         }
     )
