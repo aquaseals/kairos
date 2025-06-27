@@ -11,8 +11,14 @@ let idOfFocusPopupTab;
 let popupAlreadyOpen = false
 
 function removeListeners() {
-    chrome.tabs.onActivated.removeListener(onActivatedFunc)
+    try{
+            chrome.tabs.onActivated.removeListener(onActivatedFunc)
     chrome.tabs.onUpdated.removeListener(onRemovedFunc)
+    }
+    catch (err) {
+        
+    }
+
 }
 
 chrome.tabs.onRemoved.addListener(function onRemoveFunc(tabId){
@@ -94,8 +100,7 @@ function closeTab(deleteTabId) {
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
-    try {removeListeners()}
-    catch (err) {}
+    removeListeners()
     timeLeft = duration*60 // convert mins to seconds
     deleteTabId = selectedTabId
 
@@ -161,7 +166,6 @@ function pauseTimer() {
 
 function endTimer() {
     clearInterval(timer)
-    removeListeners()
 }
 
 
