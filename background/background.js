@@ -37,40 +37,49 @@ function removeListeners() {
     chrome.tabs.onActivated.removeListener(onActivatedFunc)
     chrome.tabs.onUpdated.removeListener(onUpdatedFunc)
     }
-    catch (err) {
-
-    }
-
+    catch (err) {}
 }
 
-chrome.tabs.onRemoved.addListener(function onRemoveFunc(tabId){
+// Ensure onRemoveFunc is accessible for removal
+function onRemoveFunc(tabId){
     removeListeners()
+    // If the focus popup tab is closed and the button wasn't pressed, reset popupAlreadyOpen
     if (tabId === idOfFocusPopupTab && buttonState === false) {
         popupAlreadyOpen = false
-    } else if(popupAlreadyOpen === true) {
+        idOfFocusPopupTab = undefined
+        popupWindowId = undefined
+    } else if (popupAlreadyOpen === true && tabId !== idOfFocusPopupTab) {
+        // If popup is already open and a different tab closed, do nothing
         return
     }
     console.log(`tab was closed\n has button been pressed? -> ${buttonState}\n focus popup window id -> ${popupWindowId}\n focus popup tab id -> ${idOfFocusPopupTab}\n going to go to this tab -> ${focusTabId}\n id of closed tab -> ${tabId}`)
-    if(buttonState === false && tabId === idOfFocusPopupTab && popupAlreadyOpen === false) {
-    chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
-        popupWindowId = window.id
-        popupAlreadyOpen = true
-        chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){
-        idOfFocusPopupTab = tab.id
-        chrome.tabs.onUpdated.addListener(function listener(tabId, info){ // make sure popup window loaded
-                if(tabId === tab.id && info.status === "complete") {
-                    chrome.tabs.onUpdated.removeListener(listener)
-                    chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
-                }
+    if (buttonState === false && tabId === idOfFocusPopupTab && popupAlreadyOpen === false) {
+        chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
+            popupWindowId = window.id
+            popupAlreadyOpen = true
+            chrome.tabs.create({url: chrome.runtime.getURL('./other/breakEndPopup.html')}, function(tab){
+                idOfFocusPopupTab = tab.id
+                chrome.tabs.onUpdated.addListener(function listener(tabId, info){ // make sure popup window loaded
+                    if(tabId === tab.id && info.status === "complete") {
+                        chrome.tabs.onUpdated.removeListener(listener)
+                        chrome.tabs.sendMessage(tab.id, {message: "goFocus", currentTabs: currentTabs, currentTabsIds: currentTabsIds, window: window}) //send msg to 2nd popup
+                    }
+                })
             })
         })
-    })
     }
-})
+}
+
+chrome.tabs.onRemoved.addListener(onRemoveFunc)
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.message === "startBreak"){
+            // Reset popup state at the start of a break
+            popupAlreadyOpen = false
+            buttonState = false
+            idOfFocusPopupTab = undefined
+            popupWindowId = undefined
             let selectedTab = request.selectedTab
             let selectedTabId = request.selectedTabId
             let duration = request.duration
@@ -84,11 +93,13 @@ chrome.runtime.onMessage.addListener(
             buttonState = true
             focusTabId = request.focusTabId
             popupWindowId = request.windowId
+            popupAlreadyOpen = false // The popup is being closed by button press
+            idOfFocusPopupTab = undefined
             console.log(`focus button pressed\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
-
         } else if (request.message === "popupOpened") {
             popupWindowId = request.windowId
             buttonState = false
+            popupAlreadyOpen = true
             focusTabId = request.focusTabId
             console.log(`focus popup opened\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
         }
@@ -103,7 +114,7 @@ function closeTab(deleteTabId) {
 
     removeListeners()
     try{
-    chrome.tabs.onRemoved.removeListener(onRemoveFunc)
+        chrome.tabs.onRemoved.removeListener(onRemoveFunc)
     }
     catch (err) {}
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
