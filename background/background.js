@@ -16,7 +16,7 @@ function removeListeners() {
     chrome.tabs.onUpdated.removeListener(onRemovedFunc)
     }
     catch (err) {
-        
+
     }
 
 }
@@ -76,7 +76,10 @@ function closeTab(deleteTabId) {
     endTimer()
 
     removeListeners()
+    try{
     chrome.tabs.onRemoved.removeListener(onRemoveFunc)
+    }
+    catch (err) {}
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
         popupWindowId = window.id // create 2nd popup window
         popupAlreadyOpen = true
