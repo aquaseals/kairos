@@ -94,7 +94,8 @@ function closeTab(deleteTabId) {
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
-    removeListeners()
+    try {removeListeners()}
+    catch (err) {}
     timeLeft = duration*60 // convert mins to seconds
     deleteTabId = selectedTabId
 
