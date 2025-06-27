@@ -68,7 +68,7 @@ function startBreak() {
             currentTabsIds: currentTabsIds
         },
         function() {
-            rabbitholeStatus.innerHTML = "In a rabbithole"
+            rabbitholeStatus.innerText = "In a rabbithole"
             setTimeout(() => { window.close(); }, 500);
         }
     )
@@ -82,3 +82,21 @@ document.getElementById('start').addEventListener('click', function() {
     }
 })
 
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if(request.message === "popupOpened") {
+            rabbitholeStatus.innerText = "In a rabbithole"
+        }
+        if(request.message === "buttonPressed") {
+            rabbitholeStatus.innerText = "Not in a rabbithole"
+        }
+    }
+)
+
+chrome.runtime.sendMessage({message: "getBreakStatus"}, function(response) {
+    if (response && response.inRabbithole) {
+        rabbitholeStatus.innerText = "In a rabbithole"
+    } else {
+        rabbitholeStatus.innerText = "Not in a rabbithole"
+    }
+})

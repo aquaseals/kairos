@@ -102,6 +102,9 @@ chrome.runtime.onMessage.addListener(
             popupAlreadyOpen = true
             focusTabId = request.focusTabId
             console.log(`focus popup opened\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
+        } else if (request.message === "getBreakStatus") {
+            // Consider inRabbithole true if timer is running and popup not closed by button
+            sendResponse({inRabbithole: !!(timer && timer !== 0 && !buttonState)});
         }
     }
 )

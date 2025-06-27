@@ -72,3 +72,7 @@ select {
     color: white;
     font-size: 15px;
 }
+
+#status {
+    font-size: 20px;
+}
