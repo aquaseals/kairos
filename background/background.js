@@ -47,9 +47,6 @@ function onRemoveFunc(tabId){
         if (!buttonState && popupAlreadyOpen) {
             // user closed popup without pressing focus button, so recreate it
             popupAlreadyOpen = false
-            idOfFocusPopupTab = undefined
-            popupWindowId = undefined
-            // recreate the focus popup
             chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
                 popupWindowId = window.id
                 popupAlreadyOpen = true
