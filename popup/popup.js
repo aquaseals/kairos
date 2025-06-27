@@ -67,7 +67,9 @@ function startBreak() {
             currentTabsIds: currentTabsIds
         },
         function() {
-            setTimeout(() => { window.close(); }, 500);
+            chrome.tabs.query({active: true, title:"rabbithole"}, function(tab){ 
+                chrome.tabs.remove(tab[0].id)
+            })
         }
     )
 }

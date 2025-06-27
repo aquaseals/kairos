@@ -91,7 +91,6 @@ chrome.runtime.onMessage.addListener(
             focusTabId = request.focusTabId
             console.log(`focus popup opened\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
         }
-        return true
     }
 )
 
