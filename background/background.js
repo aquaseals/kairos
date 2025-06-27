@@ -10,9 +10,30 @@ let focusTabId;
 let idOfFocusPopupTab;
 let popupAlreadyOpen = false
 
+function onActivatedFunc(activeInfo){
+        if(activeInfo.tabId === selectedTabId && timeLeft > 0) {
+            startTimer()
+            console.log(`starting timer in activated`)
+        } else {
+            pauseTimer()
+            console.log(`pausing timer in activated`)
+        }
+}
+
+function onRemovedFunc(tabId) {
+        if(tabId === selectedTabId && timeLeft > 0 && tabId !== deleteTabId) {
+            startTimer()
+            console.log(`starting timer in updated`)
+        } /*else {
+            pauseTimer()
+            console.log(`pausing timer in updated`)
+
+        }*/
+    }
+
 function removeListeners() {
     try{
-            chrome.tabs.onActivated.removeListener(onActivatedFunc)
+    chrome.tabs.onActivated.removeListener(onActivatedFunc)
     chrome.tabs.onUpdated.removeListener(onRemovedFunc)
     }
     catch (err) {
@@ -120,25 +141,8 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             console.log(`pausing timer in query`)
         }
     })
-    chrome.tabs.onActivated.addListener(function onActivatedFunc(activeInfo){
-        if(activeInfo.tabId === selectedTabId && timeLeft > 0) {
-            startTimer()
-            console.log(`starting timer in activated`)
-        } else {
-            pauseTimer()
-            console.log(`pausing timer in activated`)
-        }
-    })
-    chrome.tabs.onUpdated.addListener(function onRemovedFunc(tabId) {
-        if(tabId === selectedTabId && timeLeft > 0 && tabId !== deleteTabId) {
-            startTimer()
-            console.log(`starting timer in updated`)
-        } /*else {
-            pauseTimer()
-            console.log(`pausing timer in updated`)
-
-        }*/
-    })
+    chrome.tabs.onActivated.addListener(onActivatedFunc)
+    chrome.tabs.onUpdated.addListener(onRemoveFunc)
     }
 }
 
