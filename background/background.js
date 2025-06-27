@@ -118,7 +118,6 @@ chrome.runtime.onMessage.addListener(
             focusTabId = request.focusTabId
             popupWindowId = request.windowId
             popupAlreadyOpen = false 
-            idOfFocusPopupTab = undefined
             chrome.tabs.onRemoved.removeListener(onRemoveFunc)
             console.log(`focus button pressed\n has button been pressed? -> ${buttonState}\n focus popup id -> ${popupWindowId}\n going to go to this tab -> ${focusTabId}`)
         } else if (request.message === "popupOpened") {
