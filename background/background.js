@@ -158,6 +158,7 @@ function startTimer() {
 
         if(timeLeft <= 0){
             clearInterval(timer)
+            timer = 0
             closeTab(deleteTabId)
         }
     }, 1000)
@@ -176,4 +177,5 @@ function pauseTimer() {
 
 function endTimer() {
     clearInterval(timer)
+    timer = 0
 }
