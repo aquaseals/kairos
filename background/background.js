@@ -60,7 +60,7 @@ function onRemoveFunc(tabId){
                     })
                 })
             })
-        } else {
+        } else if (buttonState) {
             // focus button was pressed, do not recreate popup
             chrome.tabs.onRemoved.removeListener(onRemoveFunc)
             popupAlreadyOpen = false
