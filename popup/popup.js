@@ -5,6 +5,7 @@ let currentTabsIds = []
 let tabDropdown;
 let rabbitholeStatus = document.getElementById('status')
 let warning = document.getElementById('warning').style
+let start = document.getElementById('start').style
 
 function updateTabList() {
     tabDropdown = document.getElementById('tabs')
@@ -71,9 +72,11 @@ function startBreak() {
         function(response) {
             if (response && response.status === "error") {
                 warning.opacity = 1
+                start.opacity = 0
             } else {
                 rabbitholeStatus.innerText = "In a rabbithole"
                 warning.opacity = 0
+                start.opacity = 1
                 setTimeout(() => { window.close(); }, 500);
             }
         }
@@ -93,10 +96,13 @@ chrome.runtime.onMessage.addListener(
         if(request.message === "popupOpened") {
             rabbitholeStatus.innerText = "In a rabbithole"
             warning.opacity = 1
+            start.opacity = 0
+
         }
         if(request.message === "buttonPressed") {
             rabbitholeStatus.innerText = "Not in a rabbithole"
             warning.opacity = 0
+            start.opacity = 1
         }
     }
 )
@@ -105,8 +111,12 @@ chrome.runtime.sendMessage({message: "getBreakStatus"}, function(response) {
     if (response && response.inRabbithole) {
         rabbitholeStatus.innerText = "In a rabbithole"
         warning.opacity = 1
+        start.opacity = 0
+
     } else {
         rabbitholeStatus.innerText = "Not in a rabbithole"
         warning.opacity = 0
+        start.opacity = 1
+
     }
 })

@@ -71,6 +71,7 @@ select {
     background-color: black;
     color: white;
     font-size: 15px;
+    opacity: 1;
 }
 
 #status {
