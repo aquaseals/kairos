@@ -93,6 +93,7 @@ chrome.runtime.onMessage.addListener(
 )
 
 function closeTab(deleteTabId) {
+    buttonState = true
     console.log(`in close tab func, is popup tab already open? -> ${popupAlreadyOpen}`)
     if (popupAlreadyOpen) return
     endTimer()
