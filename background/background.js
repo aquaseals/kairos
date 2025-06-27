@@ -152,9 +152,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
     }
 }
 
-function startTimer() {
-    if (timer === 1) return
-    
+function startTimer() {    
     timer = setInterval(() => {
         timeLeft--
         console.log(timeLeft)
