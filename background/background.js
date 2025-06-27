@@ -10,9 +10,13 @@ let focusTabId;
 let idOfFocusPopupTab;
 let popupAlreadyOpen = false
 
-chrome.tabs.onRemoved.addListener(function(tabId){
-    chrome.tabs.onActivated.removeListener(arguments.callee)
-    chrome.tabs.onUpdated.removeListener(arguments.callee)
+function removeListeners() {
+    chrome.tabs.onActivated.removeListener(onActivatedFunc)
+    chrome.tabs.onUpdated.removeListener(onRemovedFunc)
+}
+
+chrome.tabs.onRemoved.addListener(function onRemoveFunc(tabId){
+    removeListeners()
     if (tabId === idOfFocusPopupTab && buttonState === false) {
         popupAlreadyOpen = false
     }
@@ -65,9 +69,8 @@ function closeTab(deleteTabId) {
     if (popupAlreadyOpen) return
     endTimer()
 
-    chrome.tabs.onActivated.removeListener(arguments.callee)
-    chrome.tabs.onUpdated.removeListener(arguments.callee)
-    chrome.tabs.onRemoved.removeListener(arguments.callee)
+    removeListeners()
+    chrome.tabs.onRemoved.removeListener(onRemoveFunc)
     chrome.windows.create({focused: true, height: 300, left: 500, top: 500, type:"popup", width: 300}, function(window){
         popupWindowId = window.id // create 2nd popup window
         popupAlreadyOpen = true
@@ -91,8 +94,7 @@ function closeTab(deleteTabId) {
 }
 
 function handleBreak(selectedTab, selectedTabId, duration) {
-    chrome.tabs.onActivated.removeListener(arguments.callee)
-    chrome.tabs.onUpdated.removeListener(arguments.callee)
+    removeListeners()
     timeLeft = duration*60 // convert mins to seconds
     deleteTabId = selectedTabId
 
@@ -109,7 +111,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             console.log(`pausing timer in query`)
         }
     })
-    chrome.tabs.onActivated.addListener(function (activeInfo){
+    chrome.tabs.onActivated.addListener(function onActivatedFunc(activeInfo){
         if(activeInfo.tabId === selectedTabId && timeLeft > 0) {
             startTimer()
             console.log(`starting timer in activated`)
@@ -118,7 +120,7 @@ function handleBreak(selectedTab, selectedTabId, duration) {
             console.log(`pausing timer in activated`)
         }
     })
-    chrome.tabs.onUpdated.addListener(function (tabId) {
+    chrome.tabs.onUpdated.addListener(function onRemovedFunc(tabId) {
         if(tabId === selectedTabId && timeLeft > 0 && tabId !== deleteTabId) {
             startTimer()
             console.log(`starting timer in updated`)
@@ -158,8 +160,7 @@ function pauseTimer() {
 
 function endTimer() {
     clearInterval(timer)
-    chrome.tabs.onActivated.removeListener(arguments.callee)
-    chrome.tabs.onUpdated.removeListener(arguments.callee)
+    removeListeners()
 }
 
 
