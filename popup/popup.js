@@ -59,6 +59,7 @@ function startBreak() {
     let breakLength = document.getElementById('length').value
     chrome.runtime.sendMessage({message: "startBreak", selectedTab: selectedTab, selectedTabId: selectedTabId, duration: breakLength, currentTabs: currentTabs, currentTabsIds: currentTabsIds})
     chrome.tabs.query({title: "rabbithole"}, function(tab){
+        console.log(`this is the popup tab -> ${tab}`)
         chrome.tabs.remove(tab[0].id)
     })
 }
