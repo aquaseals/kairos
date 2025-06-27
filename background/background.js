@@ -66,6 +66,7 @@ function onRemoveFunc(tabId){
             idOfFocusPopupTab = undefined
             popupWindowId = undefined
             buttonState = false // reset for next break
+            chrome.tabs.onRemoved.addListener(onRemoveFunc)
         }
     } else if (popupAlreadyOpen === true && tabId !== idOfFocusPopupTab) {
         return
