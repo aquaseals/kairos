@@ -66,6 +66,4 @@ function startBreak() {
     })
 }
 
-document.getElementById('start').addEventListener('click', startBreak)
-
 
