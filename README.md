@@ -1,6 +1,14 @@
 # rabbithole
 A chrome extension to help you schedule break times from your current task so you can still take breaks without jumping into a rabbithole. To all the healing master procrastinators out there, this ones for you (and me).
 
+<div align="center">
+  <a href="https://shipwrecked.hackclub.com/?t=ghrm" target="_blank">
+    <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/739361f1d440b17fc9e2f74e49fc185d86cbec14_badge.png" 
+         alt="This project is part of Shipwrecked, the world's first hackathon on an island!" 
+         style="width: 35%;">
+  </a>
+</div>
+
 ## Features
 - Select your "rabbithole" tab
 - Allows you to enjoy breaks without getting side-tracked
